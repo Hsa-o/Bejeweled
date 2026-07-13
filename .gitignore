@@ -1,0 +1,15 @@
+# Configurações do VS Code
+.vscode/
+
+# Executáveis
+*.exe
+
+# Arquivos objeto
+*.o
+*.obj
+
+# Bibliotecas
+*.dll
+
+# Logs
+*.log
