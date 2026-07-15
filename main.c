@@ -60,17 +60,6 @@ void posicao_troca(int matriz[4][4]){
     mostrar_matriz(matriz);
 }
 
-void validacao_troca (int matriz[4][4]){
-    
-}
-
-void trinca (int matriz[4][4]){
-
-}
-
-void cascata (int matriz[4][4]){
-
-}
 
 int main (){
 
