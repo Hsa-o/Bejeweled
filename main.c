@@ -41,15 +41,17 @@ void mostrar_matriz(int matriz [4][4]){
 void posicao_troca(int matriz[4][4]){
     
     int linha, coluna, linha1, coluna1;
-    
-    printf("Linha da troca, coluna da troca:\n");
-    scanf("%d%d", &linha, &coluna);
-    
-    printf("Linha da troca, coluna da troca:\n");
-    scanf("%d%d", &linha1, &coluna1);
-    
-    //se linha e coluna diferente de 1-4, error!
+    do
+    {
+        printf("Linha da troca, coluna da troca:\n");
+        scanf("%d%d", &linha, &coluna);
         
+        printf("Linha da troca, coluna da troca:\n");
+        scanf("%d%d", &linha1, &coluna1);
+
+    //se linha e coluna diferente de 1-4, error!
+    } while (linha < 0 || linha > 4 || coluna < 0 || coluna > 4 || linha1 < 0 || linha1 > 4 || coluna1 < 0 || coluna1 > 4);
+    
     //Tópico descartavel--------------------------
     printf("===================\n");
     printf("Valor na matriz: %d", matriz[linha-1][coluna-1]);
@@ -70,8 +72,9 @@ int main (){
     int matriz[4][4];
     
     criar_matriz(matriz);
+    //do while-------------
     mostrar_matriz(matriz);
     posicao_troca(matriz);
-    
+    //-------------------------
     return 0;
 }
