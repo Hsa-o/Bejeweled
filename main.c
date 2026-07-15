@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "funcoes.h"
 
 void criar_matriz(int matriz[4][4]){
       for (int i = 0; i < 4; i++)
@@ -27,20 +28,9 @@ void criar_matriz(int matriz[4][4]){
     }
 }
 
-void mostrar_matriz(int matriz [4][4]){
-    for (int i = 0; i < 4; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            printf("%d\t", matriz[i][j]);
-        }
-        printf("\n");
-    }
-}
-
 void posicao_troca(int matriz[4][4]){
-    
     int linha, coluna, linha1, coluna1;
+    int expressao1, expressao;
     do
     {
         printf("Linha da troca, coluna da troca:\n");
@@ -48,9 +38,13 @@ void posicao_troca(int matriz[4][4]){
         
         printf("Linha da troca, coluna da troca:\n");
         scanf("%d%d", &linha1, &coluna1);
-
+        
+        expressao1 = (linha < 1 || linha > 4 || coluna < 1 || coluna > 4 || linha1 < 1 || linha1 > 4 || coluna1 < 1 || coluna1 > 4);
+        
     //se linha e coluna diferente de 1-4, error!
-    } while (linha < 1 || linha > 4 || coluna < 1 || coluna > 4 || linha1 < 1 || linha1 > 4 || coluna1 < 1 || coluna1 > 4);
+    } while (expressao1);
+    
+
     
     //Tópico descartavel--------------------------
     printf("===================\n");
@@ -66,6 +60,18 @@ void posicao_troca(int matriz[4][4]){
     mostrar_matriz(matriz);
 }
 
+void validacao_troca (int matriz[4][4]){
+    
+}
+
+void trinca (int matriz[4][4]){
+
+}
+
+void cascata (int matriz[4][4]){
+
+}
+
 int main (){
 
     srand(time(NULL));
@@ -75,6 +81,6 @@ int main (){
     //do while-------------
     mostrar_matriz(matriz);
     posicao_troca(matriz);
-    //-------------------------
+    //---------------------
     return 0;
 }
