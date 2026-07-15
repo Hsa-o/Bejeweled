@@ -5,4 +5,6 @@
 
 void mostrar_matriz(int matriz [4][4]);
 
+void criar_matriz(int matriz[4][4]);
+
 #endif

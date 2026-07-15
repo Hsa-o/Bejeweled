@@ -3,34 +3,11 @@
 #include <time.h>
 #include "funcoes.h"
 
-void criar_matriz(int matriz[4][4]){
-      for (int i = 0; i < 4; i++)
-      {
-        for (int j = 0; j < 4; j++)
-        {
-            do
-            {
-                matriz[i][j] = rand() % 5 + 1;
 
-            } 
-            while (
-                (j >= 2 &&
-                 matriz[i][j] == matriz[i][j-1] &&
-                 matriz[i][j] == matriz[i][j-2])
-
-                ||
-
-                (i >= 2 &&
-                 matriz[i][j] == matriz[i-1][j] &&
-                 matriz[i][j] == matriz[i-2][j])
-            );
-        }
-    }
-}
 
 void posicao_troca(int matriz[4][4]){
     int linha, coluna, linha1, coluna1;
-    int expressao1, expressao;
+    int expressao1;
     do
     {
         printf("Linha da troca, coluna da troca:\n");
@@ -42,7 +19,7 @@ void posicao_troca(int matriz[4][4]){
         expressao1 = (linha < 1 || linha > 4 || coluna < 1 || coluna > 4 || linha1 < 1 || linha1 > 4 || coluna1 < 1 || coluna1 > 4);
         
     //se linha e coluna diferente de 1-4, error!
-    } while (expressao1);0
+    } while (expressao1);
     
 
     
