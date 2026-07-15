@@ -50,7 +50,7 @@ void posicao_troca(int matriz[4][4]){
         scanf("%d%d", &linha1, &coluna1);
 
     //se linha e coluna diferente de 1-4, error!
-    } while (linha < 0 || linha > 4 || coluna < 0 || coluna > 4 || linha1 < 0 || linha1 > 4 || coluna1 < 0 || coluna1 > 4);
+    } while (linha < 1 || linha > 4 || coluna < 1 || coluna > 4 || linha1 < 1 || linha1 > 4 || coluna1 < 1 || coluna1 > 4);
     
     //Tópico descartavel--------------------------
     printf("===================\n");
