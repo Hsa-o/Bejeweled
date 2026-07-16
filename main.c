@@ -3,8 +3,6 @@
 #include <time.h>
 #include "funcoes.h"
 
-
-
 void posicao_troca(int matriz[4][4]){
     int linha, coluna, linha1, coluna1;
     int expressao, expressao1;
@@ -23,18 +21,15 @@ void posicao_troca(int matriz[4][4]){
             printf("Tente novamente!\n");
         }
         
-        
     //se linha e coluna diferente de 1-4, error!
     } while ( !expressao || expressao1);
-    
-
     
     //Tópico descartavel--------------------------
     printf("===================\n");
     printf("Valor na matriz: %d", matriz[linha-1][coluna-1]);
     printf("\n");
     printf("Valor na matriz: %d\n=================\n", matriz[linha1-1][coluna1-1]);
-    //--------------------------------------------
+
         
     int copia_pos1 = matriz[linha-1][coluna-1];
     matriz[linha-1][coluna-1] = matriz[linha1-1][coluna1-1];
