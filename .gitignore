@@ -1,5 +1,8 @@
 # Executáveis
 *.exe
+bejeweled
+teste
+exe
 
 # Arquivos objeto
 *.o
@@ -7,8 +10,18 @@
 
 # Bibliotecas
 *.dll
+*.a
 
 # Logs
 *.log
 
+# Arquivos gerados
+Display
+Render
+Screen
+Viewport
+Vendor:
+GLSL:
+
+#arquivo teste
 teste.c
