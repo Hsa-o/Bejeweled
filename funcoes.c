@@ -1,20 +1,10 @@
+#define TAM 6
 #include "funcoes.h"
 
-void mostrar_matriz(int matriz [4][4]){
-    for (int i = 0; i < 4; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            printf("%d\t", matriz[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-void criar_matriz(int matriz[4][4]){
-      for (int i = 0; i < 4; i++)
+void criar_matriz(int matriz[TAM][TAM]){
+      for (int i = 0; i < TAM; i++)
       {
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < TAM; j++)
         {
             do
             {
@@ -33,5 +23,16 @@ void criar_matriz(int matriz[4][4]){
                  matriz[i][j] == matriz[i-2][j])
             );
         }
+    }
+}
+
+void mostrar_matriz(int matriz [TAM][TAM]){
+    for (int i = 0; i < TAM; i++)
+    {
+        for (int j = 0; j < TAM; j++)
+        {
+            printf("%d\t", matriz[i][j]);
+        }
+        printf("\n");
     }
 }
