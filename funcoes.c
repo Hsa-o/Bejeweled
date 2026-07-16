@@ -1,4 +1,5 @@
 #define TAM 6
+#define GEM 5
 #include "funcoes.h"
 
 void criar_matriz(int matriz[TAM][TAM]){
@@ -8,7 +9,7 @@ void criar_matriz(int matriz[TAM][TAM]){
         {
             do
             {
-                matriz[i][j] = rand() % 5 + 1;
+                matriz[i][j] = rand() % GEM + 1;
 
             } 
             while (
