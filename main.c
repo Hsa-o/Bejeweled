@@ -7,7 +7,7 @@
 
 void posicao_troca(int matriz[4][4]){
     int linha, coluna, linha1, coluna1;
-    int expressao1;
+    int expressao, expressao1;
     do
     {
         printf("Linha da troca, coluna da troca:\n");
@@ -17,9 +17,15 @@ void posicao_troca(int matriz[4][4]){
         scanf("%d%d", &linha1, &coluna1);
         
         expressao1 = (linha < 1 || linha > 4 || coluna < 1 || coluna > 4 || linha1 < 1 || linha1 > 4 || coluna1 < 1 || coluna1 > 4);
+        expressao = ((linha == linha1)&&(abs(coluna - coluna1) == 1))||((coluna == coluna1)&&(abs(linha - linha1) == 1));
+
+        if(!expressao || expressao1){
+            printf("Tente novamente!\n");
+        }
+        
         
     //se linha e coluna diferente de 1-4, error!
-    } while (expressao1);
+    } while ( !expressao || expressao1);
     
 
     
