@@ -95,8 +95,6 @@ int main ()
 
     //Só entra na posicao_troca satisfazer o do while;
     posicao_troca(matriz, jogada);
-    mostrar_matriz(matriz);// Faz a troca
-    posicao_troca(matriz, jogada);
 
     // Mostra o tabuleiro após a troca
     printf("\nDepois da troca:\n");
