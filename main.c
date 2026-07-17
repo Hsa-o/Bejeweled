@@ -17,13 +17,58 @@ void posicao_troca(int matriz[TAM][TAM], jogador jogada)
     int copia_pos1 = matriz[jogada.linha-1][jogada.coluna-1];
     matriz[jogada.linha-1][jogada.coluna-1] = matriz[jogada.linha1-1][jogada.coluna1-1];
     matriz[jogada.linha1-1][jogada.coluna1-1] = copia_pos1;
-    //-------------------------------------------------
-    mostrar_matriz(matriz);
+    //----------------------------------------------------
 }
-int verificar_jogada(int matriz[TAM][TAM], jogador jogada)
+
+int verificar_horizontal(int matriz[TAM][TAM], int linha)
 {
+    int contador = 1;
+
+    for (int j = 1; j < TAM; j++)
+    {
+        if (matriz[linha][j] == matriz[linha][j-1])
+        {
+            contador++;
+        }
+        else
+        {
+            contador = 1;
+        }
+        
+        if (contador >= 3)
+        {
+            return 1;
+        }
+    }
+
+    return 0;   
     
 }
+
+int verificar_vertical(int matriz[TAM][TAM], int coluna)
+{
+    int contador = 1;
+    for (int i = 1; i < TAM; i++)
+    {
+        if (matriz[i][coluna] == matriz[i-1][coluna])
+        {
+            contador++;
+        }
+        else
+        {
+            contador = 1;
+        }
+        
+        if (contador >= 3)
+        {
+            return 1;
+        }
+    }
+
+    return 0;   
+    
+}
+
 int main ()
 {
     srand(time(NULL));
@@ -50,7 +95,31 @@ int main ()
 
     //Só entra na posicao_troca satisfazer o do while;
     posicao_troca(matriz, jogada);
+    mostrar_matriz(matriz);// Faz a troca
+    posicao_troca(matriz, jogada);
 
+    // Mostra o tabuleiro após a troca
+    printf("\nDepois da troca:\n");
+    mostrar_matriz(matriz);
+
+    // Verifica se houve trinca
+    if (verificar_horizontal(matriz, jogada.linha - 1) ||
+        verificar_horizontal(matriz, jogada.linha1 - 1) ||
+        verificar_vertical(matriz, jogada.coluna - 1) ||
+        verificar_vertical(matriz, jogada.coluna1 - 1))
+    {
+        printf("\nJogada válida!\n");
+    }
+    else
+    {
+        printf("\nSem trinca! Desfazendo jogada...\n");
+
+        // Desfaz a troca
+        posicao_troca(matriz, jogada);
+
+        // Mostra o tabuleiro restaurado
+        mostrar_matriz(matriz);
+    }
 
     return 0;
 }

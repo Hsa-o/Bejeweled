@@ -41,27 +41,18 @@ void mostrar_matriz(int matriz [TAM][TAM])
     }
 }
 
-int validar_posicao(int linha, int coluna, int linha1, int coluna1)
+int validar_posicao(jogador jogada)
 {
-    if(linha < 1 || linha > TAM || coluna < 1 || coluna > TAM || linha1 < 1 || linha1 > TAM || coluna1 < 1 || coluna1 > TAM)
+    if(jogada.linha < 1 || jogada.linha > TAM || jogada.coluna < 1 || jogada.coluna > TAM || jogada.linha1 < 1 || jogada.linha1 > TAM || jogada.coluna1 < 1 || jogada.coluna1 > TAM)
     {
         return 0;
     }
 
     //abs é usado para pegar o valor absoluto, ou seja, |x|} Módulo.
-    if(((linha == linha1) && (abs(coluna-coluna1)==1)) || ((coluna == coluna1) && (abs(linha-linha1)==1)))
+    if(((jogada.linha == jogada.linha1) && (abs(jogada.coluna-jogada.coluna1)==1)) || ((jogada.coluna == jogada.coluna1) && (abs(jogada.linha-jogada.linha1)==1)))
     {
         return 1;
     }
     
     return 0;
 }
-
-typedef struct
-{
-    int linha;
-    int coluna;
-    int linha1;
-    int coluna1;
-
-} jogador;

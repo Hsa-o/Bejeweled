@@ -16,4 +16,6 @@ typedef struct
 
 } jogador;
 
+int validar_posicao(jogador jogada);
+
 #endif
