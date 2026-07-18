@@ -56,3 +56,57 @@ int validar_posicao(jogador jogada)
     
     return 0;
 }
+
+void trocar_pecas(int matriz[TAM][TAM], jogador jogada)
+{  
+    //Tópico descartavel--------------------------
+    printf("===================\n");
+    printf("Valor na matriz: %d", matriz[jogada.linha-1][jogada.coluna-1]);
+    printf("\n");
+    printf("Valor na matriz: %d\n=================\n", matriz[jogada.linha1-1][jogada.coluna1-1]);
+    //--------------------------------------------
+
+    //Para substituir, precisa fazer uma trinca ----------   
+    int copia_pos1 = matriz[jogada.linha-1][jogada.coluna-1];
+    matriz[jogada.linha-1][jogada.coluna-1] = matriz[jogada.linha1-1][jogada.coluna1-1];
+    matriz[jogada.linha1-1][jogada.coluna1-1] = copia_pos1;
+    //----------------------------------------------------
+}
+
+int verificar_horizontal(int matriz[TAM][TAM], int linha)
+{
+    int contador = 1;
+
+    for (int j = 1; j < TAM; j++)
+    {
+        if (matriz[linha][j] == matriz[linha][j-1])
+        {
+            contador++;
+        }
+        else
+        {
+            contador = 1;
+        }
+        
+        if (contador >= 3)
+        {
+            return 1;
+        }
+    }
+
+    return 0;   
+    
+}
+
+int trinca(int matriz[TAM][TAM], jogador jogada)
+{
+    if (verificar_horizontal(matriz, jogada.linha - 1) ||
+        verificar_horizontal(matriz, jogada.linha1 - 1) ||
+        verificar_vertical(matriz, jogada.coluna - 1) ||
+        verificar_vertical(matriz, jogada.coluna1 - 1))
+    {
+        return 1;
+    }
+    return 0;
+        
+}

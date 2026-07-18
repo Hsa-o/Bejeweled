@@ -16,6 +16,14 @@ typedef struct
 
 } jogador;
 
+void trocar_pecas(int matriz[TAM][TAM], jogador jogada);
+
 int validar_posicao(jogador jogada);
+
+int verificar_horizontal(int matriz[TAM][TAM], int linha);
+
+int verificar_vertical(int matriz[TAM][TAM], int coluna);
+
+int trinca(int matriz[TAM][TAM], jogador jogada);
 
 #endif

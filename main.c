@@ -1,78 +1,63 @@
 #define TAM 6
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include "funcoes.h"
 
-void posicao_troca(int matriz[TAM][TAM], jogador jogada)
-{  
-    //Tópico descartavel--------------------------
-    printf("===================\n");
-    printf("Valor na matriz: %d", matriz[jogada.linha-1][jogada.coluna-1]);
-    printf("\n");
-    printf("Valor na matriz: %d\n=================\n", matriz[jogada.linha1-1][jogada.coluna1-1]);
-    //--------------------------------------------
 
-    //Para substituir, precisa fazer uma trinca ----------   
-    int copia_pos1 = matriz[jogada.linha-1][jogada.coluna-1];
-    matriz[jogada.linha-1][jogada.coluna-1] = matriz[jogada.linha1-1][jogada.coluna1-1];
-    matriz[jogada.linha1-1][jogada.coluna1-1] = copia_pos1;
-    //----------------------------------------------------
-}
 
-int verificar_horizontal(int matriz[TAM][TAM], int linha)
+void marcar_horizontal(int matriz[TAM][TAM], int apagar[TAM][TAM])
 {
-    int contador = 1;
-
-    for (int j = 1; j < TAM; j++)
+    for(int i = 0; i < TAM; i++)
     {
-        if (matriz[linha][j] == matriz[linha][j-1])
+        for(int j = 0; j < TAM - 2; j++)
         {
-            contador++;
-        }
-        else
-        {
-            contador = 1;
-        }
-        
-        if (contador >= 3)
-        {
-            return 1;
+            if(matriz[i][j] == matriz[i][j+1] &&
+               matriz[i][j] == matriz[i][j+2])
+            {
+                apagar[i][j] = 1;
+                apagar[i][j+1] = 1;
+                apagar[i][j+2] = 1;
+            }
         }
     }
-
-    return 0;   
-    
 }
 
-int verificar_vertical(int matriz[TAM][TAM], int coluna)
+void marcar_vertical(int matriz[TAM][TAM], int apagar[TAM][TAM])
 {
-    int contador = 1;
-    for (int i = 1; i < TAM; i++)
+    for(int i = 0; i < TAM - 2; i++)
     {
-        if (matriz[i][coluna] == matriz[i-1][coluna])
+        for(int j = 0; j < TAM; j++)
         {
-            contador++;
-        }
-        else
-        {
-            contador = 1;
-        }
-        
-        if (contador >= 3)
-        {
-            return 1;
+            if(matriz[i][j] == matriz[i+1][j] &&
+               matriz[i][j] == matriz[i+2][j])
+            {
+                apagar[i][j] = 1;
+                apagar[i+1][j] = 1;
+                apagar[i+2][j] = 1;
+            }
         }
     }
+}
 
-    return 0;   
-    
+void zerar_trinca(int matriz[TAM][TAM], int apagar[TAM][TAM])
+{
+    for(int i = 0; i < TAM; i++)
+    {
+        for(int j = 0; j < TAM; j++)
+        {
+            if(apagar[i][j])
+            {
+                matriz[i][j] = 0;
+            }
+        }
+    }
 }
 
 int main ()
 {
     srand(time(NULL));
     int matriz[TAM][TAM];
+    int marcar_trinca[TAM][TAM] = {0};
     jogador jogada;
 
     criar_matriz(matriz);
@@ -93,27 +78,28 @@ int main ()
         
     } while(!validar_posicao(jogada));
 
-    //Só entra na posicao_troca satisfazer o do while;
-    posicao_troca(matriz, jogada);
+    //Só entra no trocar_pecas se satisfazer o do while;
+    trocar_pecas(matriz, jogada);
 
-    // Mostra o tabuleiro após a troca
     printf("\nDepois da troca:\n");
     mostrar_matriz(matriz);
 
-    // Verifica se houve trinca
-    if (verificar_horizontal(matriz, jogada.linha - 1) ||
-        verificar_horizontal(matriz, jogada.linha1 - 1) ||
-        verificar_vertical(matriz, jogada.coluna - 1) ||
-        verificar_vertical(matriz, jogada.coluna1 - 1))
+    if (trinca(matriz, jogada))
     {
         printf("\nJogada válida!\n");
+        marcar_horizontal(matriz, apagar);
+        marcar_vertical(matriz, apagar);
+
+        zerar_trinca(matriz, apagar);
+
+        mostrar_matriz(matriz);
     }
     else
     {
         printf("\nSem trinca! Desfazendo jogada...\n");
 
         // Desfaz a troca
-        posicao_troca(matriz, jogada);
+        trocar_pecas(matriz, jogada);
 
         // Mostra o tabuleiro restaurado
         mostrar_matriz(matriz);
