@@ -31,6 +31,7 @@ void criar_matriz(int matriz[TAM][TAM])
 
 void mostrar_matriz(int matriz [TAM][TAM])
 {
+    printf("-----------------------------------------\n");
     for (int i = 0; i < TAM; i++)
     {
         for (int j = 0; j < TAM; j++)
@@ -98,6 +99,31 @@ int verificar_horizontal(int matriz[TAM][TAM], int linha)
     
 }
 
+int verificar_vertical(int matriz[TAM][TAM], int coluna)
+{
+    int contador = 1;
+
+    for (int i = 1; i < TAM; i++)
+    {
+        if (matriz[i][coluna] == matriz[i-1][coluna])
+        {
+            contador++;
+        }
+        else
+        {
+            contador = 1;
+        }
+        
+        if (contador >= 3)
+        {
+            return 1;
+        }
+    }
+
+    return 0;   
+    
+}
+
 int trinca(int matriz[TAM][TAM], jogador jogada)
 {
     if (verificar_horizontal(matriz, jogada.linha - 1) ||
@@ -109,4 +135,91 @@ int trinca(int matriz[TAM][TAM], jogador jogada)
     }
     return 0;
         
+}
+
+void remover_trincas(int matriz[TAM][TAM])
+{
+    int apagar[TAM][TAM] = {0};
+
+    //Procura trincas horizontais
+    for (int i = 0; i < TAM; i++)
+    {
+        int contador = 1;
+
+        for (int j = 1; j < TAM; j++)
+        {
+            if (matriz[i][j] == matriz[i][j-1])
+            {
+                contador++;
+            }
+            else
+            {
+                if (contador >= 3)
+                {
+                    for (int k = j-contador; k < j; k++)
+                    {
+                        apagar[i][k] = 1;
+                    }
+                }
+
+                contador = 1;
+            }
+        }
+
+        // Caso a trinca termine na última coluna
+        if (contador >= 3)
+        {
+            for (int k = TAM-contador; k < TAM; k++)
+            {
+                apagar[i][k] = 1;
+            }
+        }
+    }
+
+    //Procura trincas verticais
+    for (int j = 0; j < TAM; j++)
+    {
+        int contador = 1;
+
+        for (int i = 1; i < TAM; i++)
+        {
+            if (matriz[i][j] == matriz[i-1][j])
+            {
+                contador++;
+            }
+            else
+            {
+                if (contador >= 3)
+                {
+                    for (int k = i-contador; k < i; k++)
+                    {
+                        apagar[k][j] = 1;
+                    }
+                }
+
+                contador = 1;
+            }
+        }
+
+        // Caso a trinca termine na última linha
+        if (contador >= 3)
+        {
+            for (int k = TAM-contador; k < TAM; k++)
+            {
+                apagar[k][j] = 1;
+            }
+        }
+    }
+
+    // Zera todas as posições marcadas
+    for (int i = 0; i < TAM; i++)
+    {
+        for (int j = 0; j < TAM; j++)
+        {
+            if (apagar[i][j])
+            {
+                matriz[i][j] = 0;
+            }
+        }
+    }
 }

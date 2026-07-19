@@ -4,55 +4,6 @@
 #include "funcoes.h"
 
 
-
-void marcar_horizontal(int matriz[TAM][TAM], int apagar[TAM][TAM])
-{
-    for(int i = 0; i < TAM; i++)
-    {
-        for(int j = 0; j < TAM - 2; j++)
-        {
-            if(matriz[i][j] == matriz[i][j+1] &&
-               matriz[i][j] == matriz[i][j+2])
-            {
-                apagar[i][j] = 1;
-                apagar[i][j+1] = 1;
-                apagar[i][j+2] = 1;
-            }
-        }
-    }
-}
-
-void marcar_vertical(int matriz[TAM][TAM], int apagar[TAM][TAM])
-{
-    for(int i = 0; i < TAM - 2; i++)
-    {
-        for(int j = 0; j < TAM; j++)
-        {
-            if(matriz[i][j] == matriz[i+1][j] &&
-               matriz[i][j] == matriz[i+2][j])
-            {
-                apagar[i][j] = 1;
-                apagar[i+1][j] = 1;
-                apagar[i+2][j] = 1;
-            }
-        }
-    }
-}
-
-void zerar_trinca(int matriz[TAM][TAM], int apagar[TAM][TAM])
-{
-    for(int i = 0; i < TAM; i++)
-    {
-        for(int j = 0; j < TAM; j++)
-        {
-            if(apagar[i][j])
-            {
-                matriz[i][j] = 0;
-            }
-        }
-    }
-}
-
 int main ()
 {
     srand(time(NULL));
@@ -87,11 +38,7 @@ int main ()
     if (trinca(matriz, jogada))
     {
         printf("\nJogada válida!\n");
-        marcar_horizontal(matriz, apagar);
-        marcar_vertical(matriz, apagar);
-
-        zerar_trinca(matriz, apagar);
-
+        remover_trincas(matriz);
         mostrar_matriz(matriz);
     }
     else

@@ -26,4 +26,6 @@ int verificar_vertical(int matriz[TAM][TAM], int coluna);
 
 int trinca(int matriz[TAM][TAM], jogador jogada);
 
+void remover_trincas(int matriz[TAM][TAM]);
+
 #endif
