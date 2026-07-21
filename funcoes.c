@@ -31,15 +31,54 @@ void criar_matriz(int matriz[TAM][TAM])
 
 void mostrar_matriz(int matriz [TAM][TAM])
 {
-    printf("-----------------------------------------\n");
+    printf("\n    ");
+    for (int j = 1; j <= TAM; j++)
+    {
+        printf("%d ", j);
+    }
+    printf("\n");
+    printf("   ----------------------------\n");
+
     for (int i = 0; i < TAM; i++)
     {
+        printf("%d | ", i + 1);
         for (int j = 0; j < TAM; j++)
         {
-            printf("%d\t", matriz[i][j]);
+            printf("%d ", matriz[i][j]);
         }
         printf("\n");
     }
+    printf("\n");
+}
+
+void mostrar_matriz_com_marcador(int matriz[TAM][TAM], int novo[TAM][TAM])
+{
+    printf("\n    ");
+    for (int j = 1; j <= TAM; j++)
+    {
+        printf("%d ", j);
+    }
+    printf("\n");
+    printf("   ----------------------------\n");
+
+    for (int i = 0; i < TAM; i++)
+    {
+        printf("%d | ", i + 1);
+        for (int j = 0; j < TAM; j++)
+        {
+            if (novo[i][j])
+            {
+                printf("[%d]", matriz[i][j]);
+                if (j < TAM - 1) printf(" ");
+            }
+            else
+            {
+                printf(" %d ", matriz[i][j]);
+            }
+        }
+        printf("\n");
+    }
+    printf("\n");
 }
 
 int validar_posicao(jogador jogada)
@@ -59,19 +98,10 @@ int validar_posicao(jogador jogada)
 }
 
 void trocar_pecas(int matriz[TAM][TAM], jogador jogada)
-{  
-    //Tópico descartavel--------------------------
-    printf("===================\n");
-    printf("Valor na matriz: %d", matriz[jogada.linha-1][jogada.coluna-1]);
-    printf("\n");
-    printf("Valor na matriz: %d\n=================\n", matriz[jogada.linha1-1][jogada.coluna1-1]);
-    //--------------------------------------------
-
-    //Para substituir, precisa fazer uma trinca ----------   
+{
     int copia_pos1 = matriz[jogada.linha-1][jogada.coluna-1];
     matriz[jogada.linha-1][jogada.coluna-1] = matriz[jogada.linha1-1][jogada.coluna1-1];
     matriz[jogada.linha1-1][jogada.coluna1-1] = copia_pos1;
-    //----------------------------------------------------
 }
 
 int verificar_horizontal(int matriz[TAM][TAM], int linha)
@@ -137,9 +167,10 @@ int trinca(int matriz[TAM][TAM], jogador jogada)
         
 }
 
-void remover_trincas(int matriz[TAM][TAM])
+int remover_trincas(int matriz[TAM][TAM])
 {
     int apagar[TAM][TAM] = {0};
+    int removidas = 0;
 
     //Procura trincas horizontais
     for (int i = 0; i < TAM; i++)
@@ -211,7 +242,7 @@ void remover_trincas(int matriz[TAM][TAM])
         }
     }
 
-    // Zera todas as posições marcadas
+    // Zera todas as posições marcadas e conta removidas
     for (int i = 0; i < TAM; i++)
     {
         for (int j = 0; j < TAM; j++)
@@ -219,7 +250,73 @@ void remover_trincas(int matriz[TAM][TAM])
             if (apagar[i][j])
             {
                 matriz[i][j] = 0;
+                removidas++;
             }
         }
     }
+
+    return removidas;
+}
+
+void aplicar_gravidade(int matriz[TAM][TAM])
+{
+    for (int j = 0; j < TAM; j++)
+    {
+        int write = TAM - 1;
+
+        for (int i = TAM - 1; i >= 0; i--)
+        {
+            if (matriz[i][j] != 0)
+            {
+                matriz[write][j] = matriz[i][j];
+                if (write != i)
+                {
+                    matriz[i][j] = 0;
+                }
+                write--;
+            }
+        }
+
+        for (int i = write; i >= 0; i--)
+        {
+            matriz[i][j] = 0;
+        }
+    }
+}
+
+void preencher_matriz(int matriz[TAM][TAM], int novo[TAM][TAM])
+{
+    for (int i = 0; i < TAM; i++)
+    {
+        for (int j = 0; j < TAM; j++)
+        {
+            novo[i][j] = 0;
+            if (matriz[i][j] == 0)
+            {
+                matriz[i][j] = rand() % GEM + 1;
+                novo[i][j] = 1;
+            }
+        }
+    }
+}
+
+int existe_trinca(int matriz[TAM][TAM])
+{
+    for (int i = 0; i < TAM; i++)
+    {
+        if (verificar_horizontal(matriz, i))
+        {
+            return 1;
+        }
+    }
+
+    for (int j = 0; j < TAM; j++)
+    {
+        if (verificar_vertical(matriz, j))
+        {
+            return 1;
+        }
+    }
+
+    return 0;
 }
