@@ -1,5 +1,5 @@
 #define TAM 6
-#define GEM 5
+#define GEM 4
 #include "funcoes.h"
 
 void criar_matriz(int matriz[TAM][TAM])
@@ -44,7 +44,7 @@ void mostrar_matriz(int matriz [TAM][TAM])
 
 int validar_posicao(jogador jogada)
 {
-    if(jogada.linha < 1 || jogada.linha > TAM || jogada.coluna < 1 || jogada.coluna > TAM || jogada.linha1 < 1 || jogada.linha1 > TAM || jogada.coluna1 < 1 || jogada.coluna1 > TAM)
+    if(jogada.linha < 0 || jogada.linha > TAM || jogada.coluna < 0 || jogada.coluna > TAM || jogada.linha1 < 1 || jogada.linha1 > TAM || jogada.coluna1 < 1 || jogada.coluna1 > TAM)
     {
         return 0;
     }
