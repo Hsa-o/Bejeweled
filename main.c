@@ -13,8 +13,6 @@ int main ()
     criar_matriz(matriz);
     mostrar_matriz(matriz);
 
-    do
-    {
         do
         {
             printf("Linha da troca, coluna da troca:\n");
@@ -38,10 +36,28 @@ int main ()
 
         if (trinca(matriz, jogada))
         {
-            printf("\nJogada válida!\n");
-            remover_trincas(matriz);
-            mostrar_matriz(matriz);
+            do
+            {
+                printf("\nJogada válida!\n");
+                remover_trincas(matriz);
+    
+                printf("Depois de remover:\n");
+                mostrar_matriz(matriz);
+    
+                cascata(matriz);
+    
+                printf("Depois da cascata:\n");
+                mostrar_matriz(matriz);
+    
+                preencher(matriz);
+    
+                printf("Depois de preencher:\n");
+                mostrar_matriz(matriz);
+
+            } while (existe_trinca(matriz));
+            
         }
+
         else
         {
             printf("\nSem trinca! Desfazendo jogada...\n");
@@ -52,8 +68,8 @@ int main ()
             // Mostra o tabuleiro restaurado
             mostrar_matriz(matriz);
         }
-    }
-    while(jogada.linha !=0 || jogada.coluna != 0);
+    
+
 
     return 0;
 }

@@ -28,4 +28,10 @@ int trinca(int matriz[TAM][TAM], jogador jogada);
 
 void remover_trincas(int matriz[TAM][TAM]);
 
+void cascata(int matriz[TAM][TAM]);
+
+void preencher(int matriz[TAM][TAM]);
+
+int existe_trinca(int matriz[TAM][TAM]);
+
 #endif

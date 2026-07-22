@@ -44,7 +44,7 @@ void mostrar_matriz(int matriz [TAM][TAM])
 
 int validar_posicao(jogador jogada)
 {
-    if(jogada.linha < 0 || jogada.linha > TAM || jogada.coluna < 0 || jogada.coluna > TAM || jogada.linha1 < 1 || jogada.linha1 > TAM || jogada.coluna1 < 1 || jogada.coluna1 > TAM)
+    if(jogada.linha < 1 || jogada.linha > TAM || jogada.coluna < 1 || jogada.coluna > TAM || jogada.linha1 < 1 || jogada.linha1 > TAM || jogada.coluna1 < 1 || jogada.coluna1 > TAM)
     {
         return 0;
     }
@@ -222,4 +222,104 @@ void remover_trincas(int matriz[TAM][TAM])
             }
         }
     }
+}
+
+void cascata(int matriz[TAM][TAM])
+{
+    for (int j = 0; j < TAM; j++) // percorre cada coluna
+    {
+        for (int i = TAM - 1; i > 0; i--) // de baixo para cima
+        {
+            if (matriz[i][j] == 0)
+            {
+                int k = i - 1;
+
+                while (k >= 0 && matriz[k][j] == 0)
+                {
+                    k--;
+                }
+
+                if (k >= 0)
+                {
+                    matriz[i][j] = matriz[k][j];
+                    matriz[k][j] = 0;
+                }
+            }
+        }
+    }
+}
+
+void preencher(int matriz[TAM][TAM])
+{
+    for (int i = 0; i < TAM; i++)
+    {
+        for (int j = 0; j < TAM; j++)
+        {
+            if (matriz[i][j] == 0)
+            {
+                matriz[i][j] = rand() % GEM + 1;
+            }
+        }
+    }
+}
+
+int existe_trinca(int matriz[TAM][TAM])
+{
+    // Verifica horizontal
+    for (int i = 0; i < TAM; i++)
+    {
+        int contador = 1;
+
+        for (int j = 1; j < TAM; j++)
+        {
+            if (matriz[i][j] == matriz[i][j-1])
+            {
+                contador++;
+            }
+            else
+            {
+                if (contador >= 3)
+                {
+                    return 1;
+                }
+
+                contador = 1;
+            }
+        }
+
+        if (contador >= 3)
+        {
+            return 1;
+        }
+    }
+
+    // Verifica vertical
+    for (int j = 0; j < TAM; j++)
+    {
+        int contador = 1;
+
+        for (int i = 1; i < TAM; i++)
+        {
+            if (matriz[i][j] == matriz[i-1][j])
+            {
+                contador++;
+            }
+            else
+            {
+                if (contador >= 3)
+                {
+                    return 1;
+                }
+
+                contador = 1;
+            }
+        }
+
+        if (contador >= 3)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
 }
