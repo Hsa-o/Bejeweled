@@ -1,4 +1,5 @@
 #define TAM 6
+#define PONTOS_GEMA 5
 #include <stdio.h>
 #include <stdlib.h>
 #include "funcoes.h"
@@ -7,7 +8,7 @@ int main ()
 {
     srand(time(NULL));
     int matriz[TAM][TAM];
-    int marcar_trinca[TAM][TAM] = {0};
+    int pontuacao = 0;
     jogador jogada;
 
     criar_matriz(matriz);
@@ -36,11 +37,25 @@ int main ()
         printf("\nDepois da troca:\n");
         mostrar_matriz(matriz);
 
-        if (trinca(matriz, jogada))
+        if (fez_trinca(matriz, jogada))
         {
             printf("\nJogada válida!\n");
-            remover_trincas(matriz);
-            mostrar_matriz(matriz);
+
+            do
+            {
+                pontuacao += remover_trincas(matriz);
+                printf("Pontuação: %d\n", pontuacao);
+
+                mostrar_matriz(matriz);
+
+                descer_pecas(matriz);
+                mostrar_matriz(matriz);
+
+                preencher_matriz(matriz);
+                mostrar_matriz(matriz);
+
+
+            } while (existe_trinca(matriz));
         }
         else
         {
@@ -53,7 +68,7 @@ int main ()
             mostrar_matriz(matriz);
         }
     }
-    while(jogada.linha != 0 || jogada.coluna != 0);
+    while (existe_jogada(matriz));
 
     return 0;
 }

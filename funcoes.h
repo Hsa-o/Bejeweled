@@ -24,8 +24,16 @@ static int verificar_horizontal(int matriz[TAM][TAM], int linha);
 
 static int verificar_vertical(int matriz[TAM][TAM], int coluna);
 
-int trinca(int matriz[TAM][TAM], jogador jogada);
+int fez_trinca(int matriz[TAM][TAM], jogador jogada);
 
-void remover_trincas(int matriz[TAM][TAM]);
+int remover_trincas(int matriz[TAM][TAM]);
+
+void descer_pecas(int matriz[TAM][TAM]);
+
+void preencher_matriz(int matriz[TAM][TAM]);
+
+int existe_trinca(int matriz[TAM][TAM]);
+
+int existe_jogada(int matriz[TAM][TAM]);
 
 #endif
