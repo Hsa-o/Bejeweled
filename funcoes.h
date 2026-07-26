@@ -1,4 +1,4 @@
-#define TAM 6
+#define TAM 8
 #ifndef FUNCOES_H
 #define FUNCOES_H
 #include <stdio.h>

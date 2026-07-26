@@ -1,8 +1,9 @@
-#define TAM 6
+#define TAM 8
 #define PONTOS_GEMA 5
 #include <stdio.h>
 #include <stdlib.h>
 #include "funcoes.h"
+#include <time.h>
 
 int main ()
 {

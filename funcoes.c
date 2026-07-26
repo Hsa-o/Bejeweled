@@ -1,5 +1,5 @@
 #define TAM 6
-#define GEM 4
+#define GEM 5
 #define PONTOS_GEMA 5
 #include "funcoes.h"
 
@@ -290,7 +290,7 @@ int existe_trinca(int matriz[TAM][TAM])
 
 int existe_jogada(int matriz[TAM][TAM])
 {
-    jogador teste;
+    jogador jogada;
 
     for (int i = 0; i < TAM; i++)
     {
@@ -299,39 +299,39 @@ int existe_jogada(int matriz[TAM][TAM])
             // Testa troca para a direita
             if (j < TAM - 1)
             {
-                teste.linha = i + 1;
-                teste.coluna = j + 1;
-                teste.linha1 = i + 1;
-                teste.coluna1 = j + 2;
+                jogada.linha = i + 1;
+                jogada.coluna = j + 1;
+                jogada.linha1 = i + 1;
+                jogada.coluna1 = j + 2;
 
-                trocar_pecas(matriz, teste);
+                trocar_pecas(matriz, jogada);
 
-                if (fez_trinca(matriz, teste))
+                if (fez_trinca(matriz, jogada))
                 {
-                    trocar_pecas(matriz, teste); // desfaz
+                    trocar_pecas(matriz, jogada); // desfaz
                     return 1;
                 }
 
-                trocar_pecas(matriz, teste); // desfaz
+                trocar_pecas(matriz, jogada); // desfaz
             }
 
             // Testa troca para baixo
             if (i < TAM - 1)
             {
-                teste.linha = i + 1;
-                teste.coluna = j + 1;
-                teste.linha1 = i + 2;
-                teste.coluna1 = j + 1;
+                jogada.linha = i + 1;
+                jogada.coluna = j + 1;
+                jogada.linha1 = i + 2;
+                jogada.coluna1 = j + 1;
 
-                trocar_pecas(matriz, teste);
+                trocar_pecas(matriz, jogada);
 
-                if (fez_trinca(matriz, teste))
+                if (fez_trinca(matriz, jogada))
                 {
-                    trocar_pecas(matriz, teste); // desfaz
+                    trocar_pecas(matriz, jogada); // desfaz
                     return 1;
                 }
 
-                trocar_pecas(matriz, teste); // desfaz
+                trocar_pecas(matriz, jogada); // desfaz
             }
         }
     }
