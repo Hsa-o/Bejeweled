@@ -2,6 +2,8 @@
 #ifndef FUNCOES_H
 #define FUNCOES_H
 #include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
 
 void criar_matriz(int matriz[TAM][TAM]);
 

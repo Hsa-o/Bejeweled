@@ -1,4 +1,3 @@
-#define TAM 6
 #define GEM 5
 #define PONTOS_GEMA 5
 #include "funcoes.h"
