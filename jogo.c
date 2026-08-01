@@ -11,14 +11,6 @@ void desenharJogo(Texture2D *jogo, Texture2D gemas[GEM], Gema matriz[TAM][TAM], 
         WHITE
     );
 
-    DrawRectangleLines(
-        inicioX,
-        inicioY,
-        larguraTabuleiro,
-        alturaTabuleiro,
-        RED
-    );
-
     for (int i = 0; i < TAM; i++)
     {
         for (int j = 0; j < TAM; j++)

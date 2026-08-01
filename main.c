@@ -12,6 +12,7 @@
 #include "funcoes.h"
 #include "menu.h"
 #include "jogo.h"
+#include "fim.h"
 
 int main(void)
 {
@@ -21,11 +22,11 @@ int main(void)
 
     Texture2D menu = LoadTexture("perifericos/fundo.png");
     Texture2D jogo = LoadTexture("perifericos/jogo.png");
+    Texture2D fim = LoadTexture("perifericos/game-over.png");
 
     Texture2D som = LoadTexture("perifericos/unmute.png");
     Texture2D mute = LoadTexture("perifericos/mute.png");
  
-    
     Texture2D gemas[GEM];
     gemas[0] = LoadTexture("perifericos/gema1.png");
     gemas[1] = LoadTexture("perifericos/gema2.png");
@@ -35,9 +36,11 @@ int main(void)
 
     Sound somClique = LoadSound("perifericos/select.wav");
     Sound somJogar = LoadSound("perifericos/newArtifact.wav");
+    Sound somFim = LoadSound("perifericos/newRecord.wav");
+
     Music musicaFundo = LoadMusicStream("perifericos/pelicano.mp3");
     PlayMusicStream(musicaFundo);
-    SetMusicVolume(musicaFundo, 0.8f); // volume de 0 a 1
+    SetMusicVolume(musicaFundo, 0.8f); 
 
     int larguraTabuleiro = 800;
     int alturaTabuleiro = 435;
@@ -65,13 +68,8 @@ int main(void)
 
     int somLigado = 1;
 
-    Rectangle botaoSom = 
-    {
-        30,
-        642,
-        50,
-        50
-    };
+    Rectangle botaoSom = {30, 642, 50, 50};
+    Rectangle botaoFim = {460, 630, 334, 80};
 
     while (!WindowShouldClose())
     {
@@ -178,9 +176,21 @@ int main(void)
                     }
                 }
             }
+            if (CheckCollisionPointRec(mouse, botaoFim))
+               {
+                   if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+                   {
+                        PlaySound(somFim);
+                        tela = 2;
+                        jogo_iniciado = 0;
+                   }
+               }
 
             desenharJogo(&jogo, gemas, matriz, inicioX, inicioY, larguraTabuleiro, alturaTabuleiro, larguraGema, alturaGema, linhaSelecionada, colunaSelecionada, pontuacao); 
         }
+        else
+        desenharFim(&fim, mouse, &jogo_iniciado, &tela, &somFim);
+
         if (somLigado)
         {
             DrawTexturePro(
@@ -210,6 +220,7 @@ int main(void)
 
     UnloadTexture(menu);
     UnloadTexture(jogo);
+    UnloadTexture(fim);
 
     for(int i = 0; i < GEM; i++)
     {
@@ -218,10 +229,12 @@ int main(void)
     
     UnloadSound(somJogar);
     UnloadSound(somClique);
+    UnloadSound(somFim);
     StopMusicStream(musicaFundo);
     UnloadMusicStream(musicaFundo);
     UnloadTexture(som);
     UnloadTexture(mute);
+
     CloseAudioDevice();
 
     CloseWindow();
