@@ -4,7 +4,7 @@
 void desenharFim(Texture2D *fim, Vector2 mouse, int *jogo_iniciado,  int *tela, Sound *somFim, Gema matriz[TAM][TAM], int *pontuacao) 
 {
     
-    Rectangle botaoFim = {825, 540, 75, 75};
+    Rectangle botaoFim = {836, 547, 75, 75};
     DrawTexturePro
         (
             *fim,
