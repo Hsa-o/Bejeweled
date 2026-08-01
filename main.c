@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <unistd.h>
 
 #include "funcoes.h"
 #include "menu.h"
@@ -189,7 +188,7 @@ int main(void)
             desenharJogo(&jogo, gemas, matriz, inicioX, inicioY, larguraTabuleiro, alturaTabuleiro, larguraGema, alturaGema, linhaSelecionada, colunaSelecionada, pontuacao); 
         }
         else
-        desenharFim(&fim, mouse, &jogo_iniciado, &tela, &somFim);
+        desenharFim(&fim, mouse, &jogo_iniciado, &tela, &somFim, matriz, &pontuacao);
 
         if (somLigado)
         {
