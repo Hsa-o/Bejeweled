@@ -5,6 +5,7 @@ void desenharFim(Texture2D *fim, Vector2 mouse, int *jogo_iniciado,  int *tela, 
 {
     
     Rectangle botaoFim = {836, 547, 75, 75};
+
     DrawTexturePro
         (
             *fim,
@@ -28,13 +29,15 @@ void desenharFim(Texture2D *fim, Vector2 mouse, int *jogo_iniciado,  int *tela, 
                      criar_matriz(matriz);
                 }
         }
+
         char textoPontuacao[50];
 
         sprintf(textoPontuacao, "Pontos: %d", *pontuacao);
 
         int larguraTexto = MeasureText(textoPontuacao, 30);
 
-        DrawText(
+        DrawText
+        (
             textoPontuacao, 415, 205, 40, BLACK
         );
 
