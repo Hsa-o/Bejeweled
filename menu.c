@@ -1,6 +1,6 @@
 #include "menu.h"
 
-void desenharMenu(Texture2D *menu, Vector2 mouse, int *jogo_iniciado,  int *tela, int matriz[TAM][TAM]) {
+void desenharMenu(Texture2D *menu, Vector2 mouse, int *jogo_iniciado,  int *tela, Gema matriz[TAM][TAM], Sound *somJogar) {
     
     Rectangle botaoJogar = {460, 405, 334, 80};
      DrawTexturePro
@@ -24,6 +24,7 @@ void desenharMenu(Texture2D *menu, Vector2 mouse, int *jogo_iniciado,  int *tela
     
                    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
                    {
+                    PlaySound(*somJogar);
                      *tela = 1;
                      criar_matriz(matriz);
                      *jogo_iniciado = 1;

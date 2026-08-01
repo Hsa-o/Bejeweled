@@ -6,6 +6,6 @@
 
 #define TAM 8
 
-void desenharMenu(Texture2D *menu, Vector2 mouse, int *jogo_iniciado,  int *tela, int matriz[TAM][TAM]);
+void desenharMenu(Texture2D *menu, Vector2 mouse, int *jogo_iniciado,  int *tela, Gema matriz[TAM][TAM], Sound *somJogar);
 
 #endif //MENU_H

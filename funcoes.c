@@ -1,42 +1,44 @@
-#define GEM 5
 #define PONTOS_GEMA 5
 #include "funcoes.h"
 
-void criar_matriz(int matriz[TAM][TAM])
+void criar_matriz(Gema matriz[TAM][TAM])
 {
       for (int i = 0; i < TAM; i++)
       {
         for (int j = 0; j < TAM; j++)
         {
+            matriz[i][j].textura = (Texture2D){0};
+            matriz[i][j].posicao = (Vector2){0,0};
+            matriz[i][j].caixa = (Rectangle){0,0,0,0};
             do
             {
-                matriz[i][j] = rand() % GEM + 1;
+                matriz[i][j].tipo = rand() % GEM + 1;
 
             } 
             while 
             (
                 (j >= 2 &&
-                 matriz[i][j] == matriz[i][j-1] &&
-                 matriz[i][j] == matriz[i][j-2])
+                 matriz[i][j].tipo == matriz[i][j-1].tipo &&
+                 matriz[i][j].tipo == matriz[i][j-2].tipo)
 
                 ||
 
                 (i >= 2 &&
-                 matriz[i][j] == matriz[i-1][j] &&
-                 matriz[i][j] == matriz[i-2][j])
+                 matriz[i][j].tipo == matriz[i-1][j].tipo &&
+                 matriz[i][j].tipo == matriz[i-2][j].tipo)
             );
         }
     }
 }
 
-void mostrar_matriz(int matriz [TAM][TAM])
+void mostrar_matriz(Gema matriz [TAM][TAM])
 {
     printf("-----------------------------------------\n");
     for (int i = 0; i < TAM; i++)
     {
         for (int j = 0; j < TAM; j++)
         {
-            printf("%d\t", matriz[i][j]);
+            printf("%d\t", matriz[i][j].tipo);
         }
         printf("\n");
     }
@@ -65,22 +67,22 @@ int validar_posicao(jogador jogada)
     return 0;
 }
 
-void trocar_pecas(int matriz[TAM][TAM], jogador jogada)
+void trocar_pecas(Gema matriz[TAM][TAM], jogador jogada)
 { 
     //Para substituir, precisa fazer uma trinca ----------   
-    int copia_pos1 = matriz[jogada.linha-1][jogada.coluna-1];
+    Gema copia_pos1 = matriz[jogada.linha-1][jogada.coluna-1];
     matriz[jogada.linha-1][jogada.coluna-1] = matriz[jogada.linha1-1][jogada.coluna1-1];
     matriz[jogada.linha1-1][jogada.coluna1-1] = copia_pos1;
     //----------------------------------------------------
 }
 
-static int verificar_horizontal(int matriz[TAM][TAM], int linha)
+static int verificar_horizontal(Gema matriz[TAM][TAM], int linha)
 {
     int contador = 1;
 
     for (int j = 1; j < TAM; j++)
     {
-        if (matriz[linha][j] == matriz[linha][j-1])
+        if (matriz[linha][j].tipo == matriz[linha][j-1].tipo)
         {
             contador++;
         }
@@ -99,13 +101,13 @@ static int verificar_horizontal(int matriz[TAM][TAM], int linha)
     
 }
 
-static int verificar_vertical(int matriz[TAM][TAM], int coluna)
+static int verificar_vertical(Gema matriz[TAM][TAM], int coluna)
 {
     int contador = 1;
 
     for (int i = 1; i < TAM; i++)
     {
-        if (matriz[i][coluna] == matriz[i-1][coluna])
+        if (matriz[i][coluna].tipo == matriz[i-1][coluna].tipo)
         {
             contador++;
         }
@@ -124,7 +126,7 @@ static int verificar_vertical(int matriz[TAM][TAM], int coluna)
     
 }
 
-int fez_trinca(int matriz[TAM][TAM], jogador jogada)
+int fez_trinca(Gema matriz[TAM][TAM], jogador jogada)
 {
     if (verificar_horizontal(matriz, jogada.linha - 1) ||
         verificar_horizontal(matriz, jogada.linha1 - 1) ||
@@ -137,7 +139,7 @@ int fez_trinca(int matriz[TAM][TAM], jogador jogada)
         
 }
 
-int remover_trincas(int matriz[TAM][TAM])
+int remover_trincas(Gema matriz[TAM][TAM])
 {
     int apagar[TAM][TAM] = {0};
     int pontos = 0;
@@ -148,7 +150,7 @@ int remover_trincas(int matriz[TAM][TAM])
 
         for (int j = 1; j < TAM; j++)
         {
-            if (matriz[i][j] == matriz[i][j-1])
+            if (matriz[i][j].tipo == matriz[i][j-1].tipo)
             {
                 contador++;
             }
@@ -183,7 +185,7 @@ int remover_trincas(int matriz[TAM][TAM])
 
         for (int i = 1; i < TAM; i++)
         {
-            if (matriz[i][j] == matriz[i-1][j])
+            if (matriz[i][j].tipo == matriz[i-1][j].tipo)
             {
                 contador++;
             }
@@ -218,7 +220,7 @@ int remover_trincas(int matriz[TAM][TAM])
         {
             if (apagar[i][j])
             {
-                matriz[i][j] = 0;
+                matriz[i][j].tipo = 0;
                 pontos += PONTOS_GEMA;
             }
         }
@@ -226,28 +228,20 @@ int remover_trincas(int matriz[TAM][TAM])
     return pontos;
 }
 
-void descer_pecas(int matriz[TAM][TAM])
-
+void descer_pecas(Gema matriz[TAM][TAM])
 {
-    // Percorre cada coluna
     for (int j = 0; j < TAM; j++)
     {
-        // Percorre de baixo para cima
         for (int i = TAM - 1; i >= 0; i--)
         {
-            // Se encontrou um espaço vazio
-            if (matriz[i][j] == 0)
+            if (matriz[i][j].tipo == 0)
             {
-                // Procura uma peça acima
                 for (int k = i - 1; k >= 0; k--)
                 {
-                    if (matriz[k][j] != 0)
+                    if (matriz[k][j].tipo != 0)
                     {
-                        // Move a peça para baixo
                         matriz[i][j] = matriz[k][j];
-                        matriz[k][j] = 0;
-
-                        // Para de procurar nessa posição
+                        matriz[k][j].tipo = 0;
                         break;
                     }
                 }
@@ -256,21 +250,21 @@ void descer_pecas(int matriz[TAM][TAM])
     }
 }
 
-void preencher_matriz(int matriz[TAM][TAM])
+void preencher_matriz(Gema matriz[TAM][TAM])
 {
     for (int i = 0; i < TAM; i++)
     {
         for (int j = 0; j < TAM; j++)
         {
-            if (matriz[i][j] == 0)
+            if (matriz[i][j].tipo == 0)
             {
-                matriz[i][j] = rand() % GEM + 1;
+                matriz[i][j].tipo = rand() % GEM + 1;
             }
         }
     }
 }
 
-int existe_trinca(int matriz[TAM][TAM])
+int existe_trinca(Gema matriz[TAM][TAM])
 {
     for (int i = 0; i < TAM; i++)
     {
@@ -287,7 +281,7 @@ int existe_trinca(int matriz[TAM][TAM])
     return 0;
 }
 
-int existe_jogada(int matriz[TAM][TAM])
+int existe_jogada(Gema matriz[TAM][TAM])
 {
     jogador jogada;
 
