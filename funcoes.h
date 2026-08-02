@@ -34,7 +34,6 @@ void trocar_pecas(Gema matriz[TAM][TAM], jogador jogada);
 
 int validar_posicao(jogador jogada);
 
-
 int fez_trinca(Gema matriz[TAM][TAM], jogador jogada);
 
 int remover_trincas(Gema matriz[TAM][TAM]);

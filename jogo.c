@@ -60,9 +60,10 @@ void desenharJogo(Texture2D *jogo, Texture2D gemas[GEM], Gema matriz[TAM][TAM], 
         int x2 = inicioX + (dicaJogada.coluna1 - 1) * larguraGema;
         int y2 = inicioY + (dicaJogada.linha1 - 1) * alturaGema;
 
-        DrawRectangleLinesEx((Rectangle){x1, y1, larguraGema, alturaGema}, 4, GOLD);
-        DrawRectangleLinesEx((Rectangle){x2, y2, larguraGema, alturaGema}, 4, GOLD);
+        DrawRectangleLinesEx((Rectangle){x1, y1, larguraGema, alturaGema}, 4, RED);
+        DrawRectangleLinesEx((Rectangle){x2, y2, larguraGema, alturaGema}, 4, RED);
     }
+    
+    DrawText("Clique em duas gemas adjacentes", 40, 90, 20, WHITE);
 
-    Rectangle caixa = {430, 625, 400, 85};
 }

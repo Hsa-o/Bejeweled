@@ -75,8 +75,8 @@ int main(void)
 
     Rectangle botaoSom = {30, 642, 50, 50};
     Rectangle botaoFim = {460, 630, 334, 80};
-    Rectangle botaoDica = {40, 120, 120, 45};
-    Rectangle botaoDesfazer = {180, 120, 160, 45};
+    Rectangle botaoDica = {40, 480, 130, 75};
+    Rectangle botaoDesfazer = {40, 300, 120, 120};
 
     while (!WindowShouldClose())
     {
@@ -173,7 +173,7 @@ int main(void)
 
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(mouse, botaoDica))
             {
-                mostrarDica = encontrar_dica(matriz, &dicaJogada);
+                mostrarDica = encontrar_dica(matriz, &dicaJogada);    
             }
 
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(mouse, botaoDesfazer) && temDesfazer)
@@ -193,27 +193,6 @@ int main(void)
                 colunaSelecionada = -1;
             }
 
-            if (IsKeyPressed(KEY_D))
-            {
-                mostrarDica = encontrar_dica(matriz, &dicaJogada);
-            }
-
-            if (IsKeyPressed(KEY_U) && temDesfazer)
-            {
-                for (int i = 0; i < TAM; i++)
-                {
-                    for (int j = 0; j < TAM; j++)
-                    {
-                        matriz[i][j] = matrizAnterior[i][j];
-                    }
-                }
-                pontuacao = pontuacaoAnterior;
-                temDesfazer = 0;
-                mostrarDica = 0;
-                selecionada = 0;
-                linhaSelecionada = -1;
-                colunaSelecionada = -1;
-            }
             if (esperando)
             {
                 if (GetTime() - tempoTroca >= 0.3)
@@ -255,16 +234,6 @@ int main(void)
 
             desenharJogo(&jogo, gemas, matriz, inicioX, inicioY, larguraTabuleiro, alturaTabuleiro, larguraGema, alturaGema, linhaSelecionada, colunaSelecionada, pontuacao, mostrarDica, dicaJogada); 
 
-            DrawRectangleRec(botaoDica, DARKGREEN);
-            DrawRectangleLinesEx(botaoDica, 2, WHITE);
-            DrawText("DICA", (int)botaoDica.x + 30, (int)botaoDica.y + 10, 24, WHITE);
-
-            DrawRectangleRec(botaoDesfazer, DARKPURPLE);
-            DrawRectangleLinesEx(botaoDesfazer, 2, WHITE);
-            DrawText("DESFAZER", (int)botaoDesfazer.x + 15, (int)botaoDesfazer.y + 10, 24, WHITE);
-
-            DrawText("D = Dica | U = Desfazer", 40, 80, 20, WHITE);
-            DrawText("Clique em duas gemas adjacentes", 40, 110, 20, WHITE);
         }
         else
         desenharFim(&fim, mouse, &jogo_iniciado, &tela, &somFim, matriz, &pontuacao);

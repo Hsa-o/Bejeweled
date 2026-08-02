@@ -36,9 +36,6 @@ void desenharFim(Texture2D *fim, Vector2 mouse, int *jogo_iniciado,  int *tela, 
 
         int larguraTexto = MeasureText(textoPontuacao, 30);
 
-        DrawText
-        (
-            textoPontuacao, 415, 205, 40, BLACK
-        );
+        DrawText (textoPontuacao, 415, 205, 40, BLACK );
 
 }

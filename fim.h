@@ -2,6 +2,7 @@
 #define FIM_H
 
 #define TAM 8
+
 #include "funcoes.h"
 
 #include "raylib.h"
