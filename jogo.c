@@ -64,18 +64,5 @@ void desenharJogo(Texture2D *jogo, Texture2D gemas[GEM], Gema matriz[TAM][TAM], 
         DrawRectangleLinesEx((Rectangle){x2, y2, larguraGema, alturaGema}, 4, GOLD);
     }
 
-    Rectangle caixa = {450, 650, 300, 100};
-
-    DrawRectangleRec(caixa, DARKBLUE);          // Fundo
-    DrawRectangleLinesEx(caixa, 2, WHITE);      // Borda
-
-    int tamanhoFonte = 45;
-    char texto[] = "ENCERRAR";
-    DrawText(
-        texto,
-        caixa.x + (caixa.width - MeasureText(texto, tamanhoFonte)) / 2,
-        caixa.y + (caixa.height - tamanhoFonte) / 2,
-        tamanhoFonte,
-        WHITE
-    );
+    Rectangle caixa = {430, 625, 400, 85};
 }
