@@ -1,6 +1,6 @@
 #include "jogo.h"
 
-void desenharJogo(Texture2D *jogo, Texture2D gemas[GEM], Gema matriz[TAM][TAM], int inicioX, int inicioY, int larguraTabuleiro, int alturaTabuleiro, int larguraGema, int alturaGema, int linhaSelecionada, int colunaSelecionada, int pontuacao)
+void desenharJogo(Texture2D *jogo, Texture2D gemas[GEM], Gema matriz[TAM][TAM], int inicioX, int inicioY, int larguraTabuleiro, int alturaTabuleiro, int larguraGema, int alturaGema, int linhaSelecionada, int colunaSelecionada, int pontuacao, int mostrarDica, jogador dicaJogada)
 {
     DrawTexturePro(
         *jogo,
@@ -52,6 +52,18 @@ void desenharJogo(Texture2D *jogo, Texture2D gemas[GEM], Gema matriz[TAM][TAM], 
         30,
         WHITE
     );
+
+    if (mostrarDica)
+    {
+        int x1 = inicioX + (dicaJogada.coluna - 1) * larguraGema;
+        int y1 = inicioY + (dicaJogada.linha - 1) * alturaGema;
+        int x2 = inicioX + (dicaJogada.coluna1 - 1) * larguraGema;
+        int y2 = inicioY + (dicaJogada.linha1 - 1) * alturaGema;
+
+        DrawRectangleLinesEx((Rectangle){x1, y1, larguraGema, alturaGema}, 4, GOLD);
+        DrawRectangleLinesEx((Rectangle){x2, y2, larguraGema, alturaGema}, 4, GOLD);
+    }
+
     Rectangle caixa = {450, 650, 300, 100};
 
     DrawRectangleRec(caixa, DARKBLUE);          // Fundo

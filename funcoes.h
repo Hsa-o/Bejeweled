@@ -41,7 +41,13 @@ int remover_trincas(Gema matriz[TAM][TAM]);
 
 void descer_pecas(Gema matriz[TAM][TAM]);
 
-void preencher_matriz(Gema matriz[TAM][TAM]);
+void preencher_matriz(Gema matriz[TAM][TAM], int inicioX, int inicioY, int larguraGema, int alturaGema);
+
+void atualizar_posicoes(Gema matriz[TAM][TAM], int inicioX, int inicioY, int larguraGema, int alturaGema);
+
+void animar_cascata(Texture2D *jogo, Texture2D gemas[GEM], Gema matriz[TAM][TAM], int inicioX, int inicioY, int larguraTabuleiro, int alturaTabuleiro, int larguraGema, int alturaGema);
+
+int encontrar_dica(Gema matriz[TAM][TAM], jogador *melhorJogada);
 
 int existe_trinca(Gema matriz[TAM][TAM]);
 

@@ -250,7 +250,7 @@ void descer_pecas(Gema matriz[TAM][TAM])
     }
 }
 
-void preencher_matriz(Gema matriz[TAM][TAM])
+void preencher_matriz(Gema matriz[TAM][TAM], int inicioX, int inicioY, int larguraGema, int alturaGema)
 {
     for (int i = 0; i < TAM; i++)
     {
@@ -260,8 +260,115 @@ void preencher_matriz(Gema matriz[TAM][TAM])
             {
                 matriz[i][j].tipo = rand() % GEM + 1;
             }
+            matriz[i][j].posicao.x = inicioX + j * larguraGema;
+            matriz[i][j].posicao.y = inicioY + i * alturaGema;
+            matriz[i][j].caixa = (Rectangle){matriz[i][j].posicao.x, matriz[i][j].posicao.y, larguraGema, alturaGema};
         }
     }
+}
+
+void atualizar_posicoes(Gema matriz[TAM][TAM], int inicioX, int inicioY, int larguraGema, int alturaGema)
+{
+    for (int i = 0; i < TAM; i++)
+    {
+        for (int j = 0; j < TAM; j++)
+        {
+            matriz[i][j].posicao.x = inicioX + j * larguraGema;
+            matriz[i][j].posicao.y = inicioY + i * alturaGema;
+            matriz[i][j].caixa = (Rectangle){matriz[i][j].posicao.x, matriz[i][j].posicao.y, larguraGema, alturaGema};
+        }
+    }
+}
+
+void animar_cascata(Texture2D *jogo, Texture2D gemas[GEM], Gema matriz[TAM][TAM], int inicioX, int inicioY, int larguraTabuleiro, int alturaTabuleiro, int larguraGema, int alturaGema)
+{
+    for (int frame = 0; frame < 5; frame++)
+    {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        DrawTexturePro(
+            *jogo,
+            (Rectangle){0, 0, jogo->width, jogo->height},
+            (Rectangle){0, 0, 1255, 723},
+            (Vector2){0, 0},
+            0,
+            WHITE
+        );
+
+        for (int i = 0; i < TAM; i++)
+        {
+            for (int j = 0; j < TAM; j++)
+            {
+                int x = inicioX + j * larguraGema;
+                int y = inicioY + i * alturaGema;
+                int yOffset = (frame % 2 == 0) ? 2 : -2;
+
+                if (matriz[i][j].tipo > 0)
+                {
+                    DrawTexturePro(
+                        gemas[matriz[i][j].tipo - 1],
+                        (Rectangle){0, 0, 48, 48},
+                        (Rectangle){x, y + yOffset, larguraGema, alturaGema},
+                        (Vector2){0, 0},
+                        0,
+                        WHITE
+                    );
+                }
+            }
+        }
+
+        EndDrawing();
+        WaitTime(0.02f);
+    }
+}
+
+int encontrar_dica(Gema matriz[TAM][TAM], jogador *melhorJogada)
+{
+    jogador tentativa;
+    for (int i = 0; i < TAM; i++)
+    {
+        for (int j = 0; j < TAM; j++)
+        {
+            // tenta troca para direita
+            if (j < TAM - 1)
+            {
+                tentativa.linha = i + 1;
+                tentativa.coluna = j + 1;
+                tentativa.linha1 = i + 1;
+                tentativa.coluna1 = j + 2;
+
+                trocar_pecas(matriz, tentativa);
+                if (fez_trinca(matriz, tentativa))
+                {
+                    trocar_pecas(matriz, tentativa);
+                    *melhorJogada = tentativa;
+                    return 1;
+                }
+                trocar_pecas(matriz, tentativa);
+            }
+
+            // tenta troca para baixo
+            if (i < TAM - 1)
+            {
+                tentativa.linha = i + 1;
+                tentativa.coluna = j + 1;
+                tentativa.linha1 = i + 2;
+                tentativa.coluna1 = j + 1;
+
+                trocar_pecas(matriz, tentativa);
+                if (fez_trinca(matriz, tentativa))
+                {
+                    trocar_pecas(matriz, tentativa);
+                    *melhorJogada = tentativa;
+                    return 1;
+                }
+                trocar_pecas(matriz, tentativa);
+            }
+        }
+    }
+
+    return 0;
 }
 
 int existe_trinca(Gema matriz[TAM][TAM])

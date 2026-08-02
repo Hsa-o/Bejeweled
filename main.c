@@ -55,15 +55,21 @@ int main(void)
     srand(time(NULL));
     
     Gema matriz[TAM][TAM];
+    Gema matrizAnterior[TAM][TAM];
     jogador jogada;
+    jogador jogadaAnterior = {0};
+    jogador dicaJogada = {0};
 
     int pontuacao = 0;
+    int pontuacaoAnterior = 0;
     int selecionada = 0;
     int linhaSelecionada = -1;
     int colunaSelecionada = -1;
     int jogo_iniciado = 0;
     int esperando = 0;
     double tempoTroca = 0;
+    int temDesfazer = 0;
+    int mostrarDica = 0;
 
     int somLigado = 1;
 
@@ -135,11 +141,20 @@ int main(void)
 
                         if (validar_posicao(jogada))
                         {
+                            for (int i = 0; i < TAM; i++)
+                            {
+                                for (int j = 0; j < TAM; j++)
+                                {
+                                    matrizAnterior[i][j] = matriz[i][j];
+                                }
+                            }
+                            pontuacaoAnterior = pontuacao;
+                            jogadaAnterior = jogada;
+                            temDesfazer = 0;
+
                             trocar_pecas(matriz, jogada);
                             esperando = 1;
                             tempoTroca = GetTime();
-
-                            
                         }
                         else
                         {
@@ -149,6 +164,25 @@ int main(void)
                     }
                 }
             }
+
+            if (IsKeyPressed(KEY_D))
+            {
+                mostrarDica = encontrar_dica(matriz, &dicaJogada);
+            }
+
+            if (IsKeyPressed(KEY_U) && temDesfazer)
+            {
+                for (int i = 0; i < TAM; i++)
+                {
+                    for (int j = 0; j < TAM; j++)
+                    {
+                        matriz[i][j] = matrizAnterior[i][j];
+                    }
+                }
+                pontuacao = pontuacaoAnterior;
+                temDesfazer = 0;
+                mostrarDica = 0;
+            }
             if (esperando)
             {
                 if (GetTime() - tempoTroca >= 0.3)
@@ -157,6 +191,7 @@ int main(void)
 
                     if (fez_trinca(matriz, jogada))
                     {
+                        temDesfazer = 1;
                         printf("Formou trinca!\n");
 
                         pontuacao += remover_trincas(matriz);
@@ -164,7 +199,8 @@ int main(void)
                         while (existe_trinca(matriz))
                         {
                             descer_pecas(matriz);
-                            preencher_matriz(matriz);
+                            animar_cascata(&jogo, gemas, matriz, inicioX, inicioY, larguraTabuleiro, alturaTabuleiro, larguraGema, alturaGema);
+                            preencher_matriz(matriz, inicioX, inicioY, larguraGema, alturaGema);
                             pontuacao += remover_trincas(matriz);
                         }
                     }
@@ -172,6 +208,7 @@ int main(void)
                     {
                         printf("Sem trinca!\n");
                         trocar_pecas(matriz, jogada);
+                        temDesfazer = 0;
                     }
                 }
             }
@@ -185,7 +222,9 @@ int main(void)
                    }
                }
 
-            desenharJogo(&jogo, gemas, matriz, inicioX, inicioY, larguraTabuleiro, alturaTabuleiro, larguraGema, alturaGema, linhaSelecionada, colunaSelecionada, pontuacao); 
+            desenharJogo(&jogo, gemas, matriz, inicioX, inicioY, larguraTabuleiro, alturaTabuleiro, larguraGema, alturaGema, linhaSelecionada, colunaSelecionada, pontuacao, mostrarDica, dicaJogada); 
+            DrawText("D = Dica | U = Desfazer", 40, 80, 20, WHITE);
+            DrawText("Clique em duas gemas adjacentes", 40, 110, 20, WHITE);
         }
         else
         desenharFim(&fim, mouse, &jogo_iniciado, &tela, &somFim, matriz, &pontuacao);
