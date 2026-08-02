@@ -75,6 +75,8 @@ int main(void)
 
     Rectangle botaoSom = {30, 642, 50, 50};
     Rectangle botaoFim = {460, 630, 334, 80};
+    Rectangle botaoDica = {40, 120, 120, 45};
+    Rectangle botaoDesfazer = {180, 120, 160, 45};
 
     while (!WindowShouldClose())
     {
@@ -118,6 +120,8 @@ int main(void)
                 {
                     if (selecionada == 0)
                     {
+                        mostrarDica = 0;
+
                         jogada.linha = linha + 1;
                         jogada.coluna = coluna + 1;
 
@@ -130,6 +134,8 @@ int main(void)
                     }
                     else
                     {
+                        mostrarDica = 0;
+
                         jogada.linha1 = linha + 1;
                         jogada.coluna1 = coluna + 1;
 
@@ -165,6 +171,28 @@ int main(void)
                 }
             }
 
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(mouse, botaoDica))
+            {
+                mostrarDica = encontrar_dica(matriz, &dicaJogada);
+            }
+
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(mouse, botaoDesfazer) && temDesfazer)
+            {
+                for (int i = 0; i < TAM; i++)
+                {
+                    for (int j = 0; j < TAM; j++)
+                    {
+                        matriz[i][j] = matrizAnterior[i][j];
+                    }
+                }
+                pontuacao = pontuacaoAnterior;
+                temDesfazer = 0;
+                mostrarDica = 0;
+                selecionada = 0;
+                linhaSelecionada = -1;
+                colunaSelecionada = -1;
+            }
+
             if (IsKeyPressed(KEY_D))
             {
                 mostrarDica = encontrar_dica(matriz, &dicaJogada);
@@ -182,6 +210,9 @@ int main(void)
                 pontuacao = pontuacaoAnterior;
                 temDesfazer = 0;
                 mostrarDica = 0;
+                selecionada = 0;
+                linhaSelecionada = -1;
+                colunaSelecionada = -1;
             }
             if (esperando)
             {
@@ -223,6 +254,15 @@ int main(void)
                }
 
             desenharJogo(&jogo, gemas, matriz, inicioX, inicioY, larguraTabuleiro, alturaTabuleiro, larguraGema, alturaGema, linhaSelecionada, colunaSelecionada, pontuacao, mostrarDica, dicaJogada); 
+
+            DrawRectangleRec(botaoDica, DARKGREEN);
+            DrawRectangleLinesEx(botaoDica, 2, WHITE);
+            DrawText("DICA", (int)botaoDica.x + 30, (int)botaoDica.y + 10, 24, WHITE);
+
+            DrawRectangleRec(botaoDesfazer, DARKPURPLE);
+            DrawRectangleLinesEx(botaoDesfazer, 2, WHITE);
+            DrawText("DESFAZER", (int)botaoDesfazer.x + 15, (int)botaoDesfazer.y + 10, 24, WHITE);
+
             DrawText("D = Dica | U = Desfazer", 40, 80, 20, WHITE);
             DrawText("Clique em duas gemas adjacentes", 40, 110, 20, WHITE);
         }
